@@ -1,0 +1,5 @@
+node_modules
+dist
+app/jspm_packages
+app/scripts/**/.js
+app/scripts/**/.js.map

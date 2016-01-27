@@ -1,0 +1,14 @@
+<h2>Hero List</h2>
+<p><i>Pick a hero from the list</i></p>
+<div>
+  Choose Highlight:
+  <input type="radio" name="colors" (click)="color='lightgreen'">Green
+  <input type="radio" name="colors" (click)="color='yellow'">Yellow
+  <input type="radio" name="colors" (click)="color='cyan'">Cyan
+</div>
+<div *ngFor="#hero of heroes" (click)="selectHero(hero)" [myHighlight]="color" defaultColor="green">
+  {{hero.name}} Super power boost {{hero.strength | exponentialStrength:3}}
+</div>
+<h4 *ngIf="selectedHero">{{selectedHero.name}}</h4>
+<hero-form></hero-form>
+<hero-detail *ngIf="selectedHero" [hero]="selectedHero" (deleted)="deleteHero($event)"></hero-detail>
