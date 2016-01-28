@@ -37,6 +37,26 @@ module.exports = function(grunt) {
       }
     },
     
+    /* systemjs builder for dist phase - this task not running on dev mode */
+    systemjs: {
+      options: {
+        sfx: true,
+        baseURL: "./",
+        configFile: "<%= config.app %>/config.js",
+      	minify: true,
+        sourceMaps: false,
+        build: {
+          mangle: false
+        }
+      },
+      dist: {
+        files: [{
+          "src":  "<%= config.app %>/scripts/main.js",
+          "dest": "<%= config.dist %>/scripts/main.js"
+        }]
+      }
+    },
+    
     /* watch  */
     watch: {
       /* do browser reload */
@@ -76,7 +96,7 @@ module.exports = function(grunt) {
             return [
               serveStatic('.tmp'),
               //connect().use('/bower_components', connect.static('./bower_components')),
-              connect().use('/node_modules', serveStatic('./node_modules')),
+              connect().use('/node_modules', serveStatic('./node_modules')), // serve node_modules folder
               serveStatic(config.app)
             ];
           }
