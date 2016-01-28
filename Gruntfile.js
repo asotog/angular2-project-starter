@@ -30,19 +30,34 @@ module.exports = function(grunt) {
       server: '.tmp'
     },
     
+    /* typescript transpiler */
+    ts: {
+      default : {
+        tsconfig: true
+      }
+    },
+    
     /* watch  */
     watch: {
+      /* do browser reload */
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= config.app %>/scripts/{,*/}*.ts',
-          '<%= config.app %>/scripts/{,*/}*.js',
+          '<%= config.app %>/{,*/}*.js',
           '<%= config.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
           '<%= config.app %>/static-assets/images/{,*/}*'
         ]
+      },
+      /* transpile typescript files */
+      typescript: {
+        files: ['<%= config.app %>/scripts/{,*/}*.ts'],
+        tasks: ['ts'],
+        options: {
+          livereload: true
+        }
       }
     },
     
@@ -87,8 +102,8 @@ module.exports = function(grunt) {
     // }
     grunt.task.run([
       'clean:server',
+      'ts',
       'connect:livereload',
-      // 'ts',
       'watch'
     ]);
   });

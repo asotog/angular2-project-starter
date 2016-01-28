@@ -1,5 +1,6 @@
 node_modules
 dist
+.tscache
 app/jspm_packages
-app/scripts/**/.js
-app/scripts/**/.js.map
+app/scripts/**/*.js
+app/scripts/**/*.js.map
