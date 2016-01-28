@@ -81,6 +81,26 @@ module.exports = function(grunt) {
       }
     },
     
+    /* copy, moves files to other places */
+    copy: {
+      /* on generating release version need to copy some files to the dist folder */
+      dist: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= config.app %>',
+          dest: '<%= config.dist %>',
+          src: [
+            '*.{ico,png,txt}',
+            'images/{,*/}*.webp',
+            'config.js',
+            '{,*/}*.html',
+            'styles/fonts/{,*/}*.*'
+          ]
+        }]
+      }
+    },
+    
     /* http server */
     connect: {
       options: {
@@ -113,13 +133,12 @@ module.exports = function(grunt) {
   
   /* custom tasks */
   grunt.registerTask('server', 'start the server and preview your app, --allow-remote for remote access', function (target) {
-    var target = target ? ('server:' + target) : 'server';
     if (grunt.option('allow-remote')) {
       grunt.config.set('connect.options.hostname', '0.0.0.0');
     }
-    // if (target === 'dist') {
-    //   return grunt.task.run(['build', 'connect:dist:keepalive']);
-    // }
+    if (target === 'dist') {
+      return grunt.task.run(['build', 'connect:dist:keepalive']);
+    }
     grunt.task.run([
       'clean:server',
       'ts',
@@ -130,4 +149,12 @@ module.exports = function(grunt) {
   
   // Default task(s).
   grunt.registerTask('default', ['server']);
+  
+  /* build for release */
+  grunt.registerTask('build', [
+    'clean:dist',
+    'ts',
+    'systemjs',
+    'copy:dist'
+  ]);
 };
