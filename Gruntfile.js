@@ -80,6 +80,20 @@ module.exports = function(grunt) {
         }
       }
     },
+    // Reads HTML for usemin blocks to enable smart builds that automatically
+    // concat, minify and revision files. Creates configurations in memory so
+    // additional tasks can operate on them
+    useminPrepare: {
+      options: {
+        dest: '<%= config.dist %>'
+      },
+      html: '<%= config.app %>/index.html'
+    },
+    usemin: {
+      options: {
+      },
+      html: ['<%= config.dist %>/{,*/}*.html']
+    },
     
     /* copy, moves files to other places */
     copy: {
@@ -95,7 +109,8 @@ module.exports = function(grunt) {
             'images/{,*/}*.webp',
             'config.js',
             '{,*/}*.html',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'scripts/{,*/}*.html'
           ]
         }]
       }
@@ -153,8 +168,12 @@ module.exports = function(grunt) {
   /* build for release */
   grunt.registerTask('build', [
     'clean:dist',
+    'useminPrepare',
+    'concat',
+    'uglify',
     'ts',
     'systemjs',
-    'copy:dist'
+    'copy:dist',
+    'usemin'
   ]);
 };

@@ -11,6 +11,6 @@ System.config({
   
   map: {
     "angular2": "npm:angular2",
-    "rxjs": "npm:rxjs",
+    "rxjs": "npm:rxjs"
   }
 });
