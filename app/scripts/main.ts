@@ -1,3 +1,6 @@
+// typings reference added
+// please see breaking changes under: 
+// https://github.com/angular/angular/blob/master/CHANGELOG.md#user-content-200-beta6-2016-02-11
 ///<reference path="../../node_modules/angular2/typings/browser.d.ts"/>
 
 
